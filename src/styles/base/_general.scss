@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(../assets/background-img.png);
+  height: 100vh;
+}
+
+//  USED TO VISUALIZE IN APP.JS
+// .main {
+//   &-container {
+//   }
+
+//   &__board {
+//     &-container {
+//     }
+//     z-index: 2;
+//     display: grid;
+//     grid-template-columns: 1fr 1fr 1fr;
+//     grid-template-rows: 1fr 1fr 1fr;
+
+//     gap: 1rem;
+//     justify-items: center;
+//     align-items: center;
+
+//     &-cell {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+
+//       width: 120px;
+//       height: 120px;
+//       background-color: red;
+//       border-left: 1px solid green;
+
+//       &:hover {
+//         cursor: pointer;
+//       }
+//     }
+//   }
+// }

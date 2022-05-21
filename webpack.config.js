@@ -32,7 +32,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: "title",
+      title: "index",
       filename: "index.html",
       template: path.resolve(__dirname, "src/template.html"), //create temp file
     }),
