@@ -2,6 +2,12 @@
 
 import "./styles/main.scss";
 
+import xImg from "./assets/mark-X.png";
+
+function insertImg(img) {
+  return `<img src="${img}" />`;
+}
+
 const Board = (() => {
   const cells = document.querySelectorAll(".main__board-cell");
   console.log(cells);
@@ -39,8 +45,10 @@ const Game = (() => {
   Board.cells.forEach((cell, i) => {
     cell.addEventListener("click", () => {
       if (typeof currBoard[i] === "undefined") {
-        currBoard[i] = currPlayer().getMark();
-        cell.textContent = currBoard[i];
+        currBoard[i] = currPlayer().getMark(); // gets images
+
+        // cell.textContent = currBoard[i];insertImg(xImg)
+        cell.innerHtml = insertImg(xImg);
         console.log(cell.textContent);
         checkWinCondition();
       }
