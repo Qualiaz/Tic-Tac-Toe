@@ -1,11 +1,10 @@
 "use strict";
 
 import "./styles/main.scss";
-// import "./assets/";
 
 const Board = (() => {
   const cells = document.querySelectorAll(".main__board-cell");
-
+  console.log(cells);
   return { cells };
 })();
 

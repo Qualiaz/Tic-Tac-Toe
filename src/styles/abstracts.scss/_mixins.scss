@@ -11,3 +11,16 @@
   background-position: center;
   transform: translate($x, $y);
 }
+
+@mixin board-divider($width, $height, $x, $y) {
+  content: "";
+  display: block;
+  background-color: $primary-container;
+
+  width: $width;
+  height: $height;
+
+  transform: translate($x, $y);
+
+  border-radius: 20px;
+}

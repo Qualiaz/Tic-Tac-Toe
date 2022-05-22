@@ -1,0 +1,55 @@
+.main__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  justify-items: center;
+  align-items: center;
+
+  gap: 1.5rem;
+
+  position: relative;
+
+  &-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 160px;
+    height: 160px;
+    border: 1px solid green;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-divider {
+    &--horizontal {
+      position: absolute;
+      width: 0;
+      height: 0;
+
+      &::before {
+        @include board-divider(540px, 12px, -270px, 86px);
+      }
+
+      &::after {
+        @include board-divider(540px, 12px, -270px, -110px);
+      }
+    }
+    &--vertical {
+      position: absolute;
+      width: 0;
+      height: 0;
+
+      &::before {
+        position: fixed;
+        @include board-divider(12px, 540px, 87px, -265px);
+      }
+      &::after {
+        @include board-divider(12px, 540px, -97px, -265px);
+      }
+    }
+  }
+}
