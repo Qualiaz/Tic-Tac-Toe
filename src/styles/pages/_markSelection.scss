@@ -1,7 +1,11 @@
+.main-container__mark-selection {
+  display: none;
+}
+
 .mark-selection {
   &--x {
     @include box-select(mark-X, -50px, 130px);
-
+    // display: none;
     &:hover {
       position: relative;
       z-index: 2;
@@ -11,6 +15,7 @@
 
   &--o {
     @include box-select(mark-O, 50px, -130px);
+    // display: none;
     &:hover {
       outline: 2px solid $second-mark-color;
     }

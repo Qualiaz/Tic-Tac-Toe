@@ -1,0 +1,18 @@
+.enemy-selection {
+  &--player {
+    @include box-select(player-icon, -50px, 10px);
+
+    &:hover {
+      position: relative;
+      z-index: 2;
+      outline: 2px solid $first-mark-color;
+    }
+  }
+  &--AI {
+    @include box-select(AI-icon, 50px, -10px);
+
+    &:hover {
+      outline: 2px solid $second-mark-color;
+    }
+  }
+}
