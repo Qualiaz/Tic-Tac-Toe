@@ -3,6 +3,7 @@
 import "./styles/main.scss";
 
 import xImg from "./assets/mark-X.png";
+import oImg from "./assets/mark-O.png";
 
 function insertImg(xImg) {
   return `<img src="${xImg}" />`;
@@ -32,34 +33,46 @@ const Game = (() => {
 
   // check if there is currently a winner
   let winner = false;
-
+  let draw = false;
   // Player switch
   let currPlayerTurn = player2;
-  let currPlayer = () => {
+  const currPlayer = () => {
     if (currPlayerTurn === player1) {
       return (currPlayerTurn = player2);
     } else return (currPlayerTurn = player1);
   };
 
   // change board state
-  Board.cells.forEach((cell, i) => {
-    cell.addEventListener("click", () => {
-      if (typeof currBoard[i] === "undefined") {
-        currBoard[i] = currPlayer().getMark(); // gets images
+  const changeBoard = (() => {
+    let listener = true;
+    Board.cells.forEach((cell, i) => {
+      cell.addEventListener("click", () => {
+        if (listener) {
+          if (typeof currBoard[i] === "undefined") {
+            currBoard[i] = currPlayer().getMark();
+            cell.innerHTML =
+              currPlayerTurn.getMark() === "X"
+                ? insertImg(xImg)
+                : insertImg(oImg);
+            checkWinCondition();
+          }
+        }
 
-        // cell.textContent = currBoard[i];insertImg(xImg)
-        cell.innerHTML = insertImg(xImg);
-        console.log(cell.textContent);
-        checkWinCondition();
-      }
+        if (draw) {
+          currPlayerTurn = player1;
+          setTimeout(resetBoard, 1000);
+        }
 
-      if (winner) {
-        currPlayerTurn.score++;
-
-        setTimeout(resetBoard, 1000);
-      }
+        if (winner) {
+          currPlayerTurn = player1;
+          listener = false;
+          currPlayerTurn.score++;
+          setTimeout(() => (listener = true), 1800);
+          setTimeout(resetBoard, 1000);
+        }
+      });
     });
-  });
+  })();
 
   function resetBoard() {
     currBoard = Array(9);
@@ -68,6 +81,7 @@ const Game = (() => {
     }
     currPlayerTurn = player2;
     winner = false;
+    draw = false;
   }
 
   // Check Win Condition
@@ -102,6 +116,9 @@ const Game = (() => {
         currBoard[6] === currPlayerTurn.getMark())
     ) {
       winner = currPlayerTurn.getName();
+    }
+    if (!winner && !currBoard.includes(undefined)) {
+      draw = true;
     }
   }
 })();
