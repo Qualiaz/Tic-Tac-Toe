@@ -4,8 +4,8 @@ import "./styles/main.scss";
 
 import xImg from "./assets/mark-X.png";
 
-function insertImg(img) {
-  return `<img src="${img}" />`;
+function insertImg(xImg) {
+  return `<img src="${xImg}" />`;
 }
 
 const Board = (() => {
@@ -48,7 +48,7 @@ const Game = (() => {
         currBoard[i] = currPlayer().getMark(); // gets images
 
         // cell.textContent = currBoard[i];insertImg(xImg)
-        cell.innerHtml = insertImg(xImg);
+        cell.innerHTML = insertImg(xImg);
         console.log(cell.textContent);
         checkWinCondition();
       }
