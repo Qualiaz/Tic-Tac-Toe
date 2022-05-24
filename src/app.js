@@ -5,37 +5,74 @@ import "./styles/main.scss";
 import xImg from "./assets/mark-X.png";
 import oImg from "./assets/mark-O.png";
 
-function insertImg(xImg) {
-  return `<img src="${xImg}" />`;
-}
-
-const Board = (() => {
-  const cells = document.querySelectorAll(".main__board-cell");
-  console.log(cells);
-  return { cells };
-})();
-
 const Player = (name, mark) => {
   const getName = () => name;
   const getMark = () => mark;
-
   const score = 0;
 
   return { getName, getMark, score };
 };
 
-const player1 = Player("robert", "X");
-const player2 = Player("mark", "O");
+let player1;
+let player2;
 
-const Game = (() => {
+const Board = (() => {
+  const cells = document.querySelectorAll(".main__board-cell");
+  return { cells };
+})();
+
+const selectMark = (() => {
+  const xMark = document.querySelector("#xMarkSelection");
+  const oMark = document.querySelector("#oMarkSelection");
+  const markContainer = document.querySelector("#markContainer");
+  const enemyContainer = document.querySelector("#enemyContainer");
+
+  xMark.addEventListener("click", () => {
+    player1 = Player("Player 1", "X");
+    player2 = Player("Player 2", "O");
+
+    markContainer.style.display = "none";
+    enemyContainer.style.display = "block";
+  });
+
+  oMark.addEventListener("click", () => {
+    player1 = Player("Player 1", "O");
+    player2 = Player("Player 2", "X");
+
+    markContainer.style.display = "none";
+    enemyContainer.style.display = "block";
+  });
+})();
+
+// ENEMY SELECTION SCREEN
+const selectEnemy = (() => {
+  const gameContainer = document.querySelector("#gameContainer");
+  const enemyContainer = document.querySelector("#enemyContainer");
+  const aiSelection = document.querySelector("#aiEnemySelection");
+  const playerSelection = document.querySelector("#playerEnemySelection");
+
+  const selectEnemy = function () {
+    enemyContainer.style.display = "none";
+    gameContainer.style.display = "block";
+    Game();
+  };
+
+  playerSelection.addEventListener("click", selectEnemy);
+  aiSelection.addEventListener("click", selectEnemy);
+})();
+
+function Game() {
   // current board
   let currBoard = Array(9);
 
-  // check if there is currently a winner
   let winner = false;
   let draw = false;
+
   // Player switch
-  let currPlayerTurn = player2;
+  let currPlayerTurn;
+  player1.getMark() === "O"
+    ? (currPlayerTurn = player1)
+    : (currPlayerTurn = player2);
   const currPlayer = () => {
     if (currPlayerTurn === player1) {
       return (currPlayerTurn = player2);
@@ -45,11 +82,16 @@ const Game = (() => {
   // change board state
   const changeBoard = (() => {
     let listener = true;
+    const insertImg = (xImg) => {
+      return `<img src="${xImg}" />`;
+    };
+
     Board.cells.forEach((cell, i) => {
       cell.addEventListener("click", () => {
         if (listener) {
           if (typeof currBoard[i] === "undefined") {
             currBoard[i] = currPlayer().getMark();
+            console.log(currPlayerTurn.getName());
             cell.innerHTML =
               currPlayerTurn.getMark() === "X"
                 ? insertImg(xImg)
@@ -59,12 +101,16 @@ const Game = (() => {
         }
 
         if (draw) {
-          currPlayerTurn = player1;
+          player1.getMark() === "O"
+            ? (currPlayerTurn = player1)
+            : (currPlayerTurn = player2);
           setTimeout(resetBoard, 1000);
         }
 
         if (winner) {
-          currPlayerTurn = player1;
+          player1.getMark() === "O"
+            ? (currPlayerTurn = player1)
+            : (currPlayerTurn = player2);
           listener = false;
           currPlayerTurn.score++;
           setTimeout(() => (listener = true), 1800);
@@ -84,7 +130,6 @@ const Game = (() => {
     draw = false;
   }
 
-  // Check Win Condition
   function checkWinCondition() {
     if (
       //ROWS
@@ -121,4 +166,4 @@ const Game = (() => {
       draw = true;
     }
   }
-})();
+}

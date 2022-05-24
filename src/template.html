@@ -11,23 +11,21 @@
       <!-- <header class="header-container">
         <div class="header__logo"></div>
       </header> -->
-      <img src="./assets/mark-X.png" alt="" />
+
       <main class="main-container">
-        <div class="main-container__mark-selection">
-          <div class="mark-selection--x"></div>
-          <div class="mark-selection--o"></div>
+        <div class="main-container__mark-selection" id="markContainer">
+          <div class="mark-selection--x" id="xMarkSelection"></div>
+          <div class="mark-selection--o" id="oMarkSelection"></div>
         </div>
-        <div class="main-container__enemy-selection">
-          <div class="enemy-selection--player"></div>
-          <div class="enemy-selection--AI"></div>
+        <div class="main-container__enemy-selection" id="enemyContainer">
+          <div class="enemy-selection--player" id="playerEnemySelection"></div>
+          <div class="enemy-selection--AI" id="aiEnemySelection"></div>
         </div>
-        <div class="main-container__board">
+        <div class="main-container__board" id="gameContainer">
           <div class="main__board">
             <div class="main__board-divider--horizontal"></div>
             <div class="main__board-divider--vertical"></div>
-            <div class="main__board-cell" id="cell-1">
-              <img src="./assets/mark-X.png" alt="" />
-            </div>
+            <div class="main__board-cell" id="cell-1"></div>
             <div class="main__board-cell" id="cell-2"></div>
             <div class="main__board-cell" id="cell-3"></div>
             <div class="main__board-cell" id="cell-4"></div>

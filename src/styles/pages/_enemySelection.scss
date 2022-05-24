@@ -1,6 +1,9 @@
+.main-container__enemy-selection {
+  display: none;
+}
+
 .enemy-selection {
   &--player {
-    display: none;
     @include box-select(player-icon, -50px, 10px);
 
     &:hover {
@@ -11,7 +14,7 @@
   }
   &--AI {
     @include box-select(AI-icon, 50px, -10px);
-    display: none;
+
     &:hover {
       outline: 2px solid $second-mark-color;
     }
