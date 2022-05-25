@@ -1,5 +1,48 @@
-.main-container__board {
+.main-container__game {
+  margin-bottom: 100px;
   display: none;
+}
+
+.main-container__score {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+  // width: 528px;
+  font-size: 23px;
+  font-family: $primary-font;
+  // top: 50px;
+
+  .score {
+    &--player1 {
+      &-container {
+        @include score-container(320px, 100px, $first-mark-color);
+      }
+      &-name {
+        margin-left: 20px;
+      }
+      &-score {
+        margin-right: 80px;
+      }
+    }
+
+    &--player2 {
+      &-container {
+        @include score-container(320px, 85px, $second-mark-color);
+
+        margin-left: 210px;
+        position: fixed;
+        margin-top: 7px;
+      }
+
+      &-name {
+        order: 1;
+        margin-right: 20px;
+      }
+      &-score {
+        margin-left: 80px;
+      }
+    }
+  }
 }
 
 .main__board {
@@ -9,6 +52,7 @@
 
   justify-items: center;
   align-items: center;
+  // align-self: center;
 
   gap: 1.5rem;
 
@@ -21,7 +65,7 @@
 
     width: 160px;
     height: 160px;
-    border: 1px solid green;
+    // border: 1px solid green;
 
     &:hover {
       cursor: pointer;

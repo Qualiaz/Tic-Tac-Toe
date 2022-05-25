@@ -1,3 +1,4 @@
+// mark and enemy selections
 @mixin box-select($img, $x, $y) {
   width: 140px;
   height: 140px;
@@ -23,4 +24,20 @@
   transform: translate($x, $y);
 
   border-radius: 20px;
+}
+
+@mixin score-container($width, $height, $color) {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid $primary-container;
+  border-radius: 10px;
+  width: $width;
+  height: $height;
+  cursor: default;
+
+  &:hover {
+    outline: 1px solid $color;
+  }
 }

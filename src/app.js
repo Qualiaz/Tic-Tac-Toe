@@ -21,9 +21,11 @@ const Board = (() => {
   return { cells };
 })();
 
+// MARK SELECTION SCREEN
 const selectMark = (() => {
   const xMark = document.querySelector("#xMarkSelection");
   const oMark = document.querySelector("#oMarkSelection");
+
   const markContainer = document.querySelector("#markContainer");
   const enemyContainer = document.querySelector("#enemyContainer");
 
@@ -61,7 +63,7 @@ const selectEnemy = (() => {
   aiSelection.addEventListener("click", selectEnemy);
 })();
 
-function Game() {
+const Game = () => {
   // current board
   let currBoard = Array(9);
 
@@ -70,49 +72,84 @@ function Game() {
 
   // Player switch
   let currPlayerTurn;
-  player1.getMark() === "O"
+  player1.getMark() === "X"
     ? (currPlayerTurn = player1)
     : (currPlayerTurn = player2);
-  const currPlayer = () => {
+  const playerSwitch = () => {
     if (currPlayerTurn === player1) {
       return (currPlayerTurn = player2);
     } else return (currPlayerTurn = player1);
   };
 
+  //highlight player turn
+  const renderTurn = () => {
+    const containerPlayer1 = document.querySelector("#player1Container");
+    const containerPlayer2 = document.querySelector("#player2Container");
+
+    if (currPlayerTurn.getName() === "Player 1") {
+      // console.log(currPlayerTurn.getName());
+      containerPlayer2.style.outline = "none";
+      if (player1.getMark() === "X")
+        return (containerPlayer1.style.outline = "1px solid #6dd6da");
+      else {
+        return (containerPlayer1.style.outline = "1px solid #edb458");
+        // console.log(currPlayerTurn.getMark());
+      }
+    }
+
+    if (currPlayerTurn.getName() === "Player 2") {
+      containerPlayer1.style.outline = "none";
+      if (player2.getMark() === "X")
+        return (containerPlayer2.style.outline = "1px solid #6dd6da");
+      else return (containerPlayer2.style.outline = "1px solid #edb458");
+    }
+  };
+  renderTurn();
+
+  const renderScore = () => {
+    const scorePlayer1 = document.querySelector("#player1Score");
+    const scorePlayer2 = document.querySelector("#player2Score");
+
+    scorePlayer1.textContent = player1.score;
+    scorePlayer2.textContent = player2.score;
+  };
+
   // change board state
   const changeBoard = (() => {
     let listener = true;
-    const insertImg = (xImg) => {
-      return `<img src="${xImg}" />`;
+    const insertImg = (img) => {
+      return `<img src="${img}" />`;
     };
 
     Board.cells.forEach((cell, i) => {
       cell.addEventListener("click", () => {
         if (listener) {
           if (typeof currBoard[i] === "undefined") {
-            currBoard[i] = currPlayer().getMark();
-            console.log(currPlayerTurn.getName());
+            currBoard[i] = currPlayerTurn.getMark();
             cell.innerHTML =
               currPlayerTurn.getMark() === "X"
                 ? insertImg(xImg)
                 : insertImg(oImg);
             checkWinCondition();
+            renderScore();
+            playerSwitch();
+            renderTurn();
           }
         }
 
         if (draw) {
-          player1.getMark() === "O"
+          player1.getMark() === "X"
             ? (currPlayerTurn = player1)
             : (currPlayerTurn = player2);
           setTimeout(resetBoard, 1000);
         }
 
         if (winner) {
-          player1.getMark() === "O"
+          player1.getMark() === "X"
             ? (currPlayerTurn = player1)
             : (currPlayerTurn = player2);
           listener = false;
-          currPlayerTurn.score++;
+
           setTimeout(() => (listener = true), 1800);
           setTimeout(resetBoard, 1000);
         }
@@ -125,9 +162,10 @@ function Game() {
     for (let i = 0; i < Board.cells.length; i++) {
       Board.cells[i].textContent = undefined;
     }
-    currPlayerTurn = player2;
+
     winner = false;
     draw = false;
+    renderTurn();
   }
 
   function checkWinCondition() {
@@ -161,9 +199,12 @@ function Game() {
         currBoard[6] === currPlayerTurn.getMark())
     ) {
       winner = currPlayerTurn.getName();
+      currPlayerTurn.score++;
     }
     if (!winner && !currBoard.includes(undefined)) {
       draw = true;
     }
   }
-}
+};
+
+// TODO AI
